@@ -6,7 +6,6 @@
 package/.idea
 .idea/
 *.log
-dist/*
 
 *.egg-info
 tests/.DS_Store
