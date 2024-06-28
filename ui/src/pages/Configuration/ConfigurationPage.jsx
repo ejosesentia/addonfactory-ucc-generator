@@ -13,9 +13,7 @@ import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import CustomTab from '../../components/CustomTab/CustomTab';
 import ConfigurationFormView from '../../components/ConfigurationFormView';
 import ConfigurationTable from '../../components/ConfigurationTable';
-import OpenApiDownloadButton from '../../components/DownloadButton/OpenApiDownloadBtn';
 import SubDescription from '../../components/SubDescription/SubDescription';
-import UccCredit from '../../components/UCCCredit/UCCCredit';
 
 const StyledHeaderControls = styled.div`
     display: inline-flex;
@@ -114,12 +112,6 @@ function ConfigurationPage() {
                             <TitleComponent>{_(title)}</TitleComponent>
                             <SubTitleComponent>{_(description || '')}</SubTitleComponent>
                             <SubDescription {...subDescription} />
-                        </ColumnLayout.Column>
-                        <ColumnLayout.Column span={3} style={{ textAlignLast: 'right' }}>
-                            <StyledHeaderControls>
-                                <UccCredit />
-                                <OpenApiDownloadButton />
-                            </StyledHeaderControls>
                         </ColumnLayout.Column>
                     </Row>
                 </ColumnLayout>
