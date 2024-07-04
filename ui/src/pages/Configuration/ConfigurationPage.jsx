@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import { _ } from '@splunk/ui-utils/i18n';
 import TabBar from '@splunk/react-ui/TabBar';
 import ToastMessages from '@splunk/react-toast-notifications/ToastMessages';
 import ColumnLayout from '@splunk/react-ui/ColumnLayout';
-
 import styled from 'styled-components';
+
 import useQuery from '../../hooks/useQuery';
 import { getUnifiedConfigs } from '../../util/util';
 import { TitleComponent, SubTitleComponent } from '../Input/InputPageStyle';
@@ -14,14 +14,6 @@ import CustomTab from '../../components/CustomTab/CustomTab';
 import ConfigurationFormView from '../../components/ConfigurationFormView';
 import ConfigurationTable from '../../components/ConfigurationTable';
 import SubDescription from '../../components/SubDescription/SubDescription';
-
-const StyledHeaderControls = styled.div`
-    display: inline-flex;
-    align-items: center;
-    justify-content: end;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-`;
 
 const Row = styled(ColumnLayout.Row)`
     padding: 5px 0px;

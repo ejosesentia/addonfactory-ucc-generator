@@ -4,17 +4,21 @@ import { variables } from '@splunk/themes';
 export const TitleComponent = styled.div.attrs({
     className: 'pageTitle',
 })`
-    font-size: ${variables.fontSizeXXLarge};
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
+    &.pageTitle {
+        font-size: ${variables.fontSizeXXLarge};
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
 `;
 
 export const SubTitleComponent = styled.div.attrs({
     className: 'pageSubtitle',
 })`
-    font-size: ${variables.fontSize};
-    margin-bottom: 10px;
+    &.pageSubtitle {
+        font-size: ${variables.fontSize};
+        margin-bottom: 10px;
+    }
 `;
 
 export const TableCaptionComponent = styled.div`

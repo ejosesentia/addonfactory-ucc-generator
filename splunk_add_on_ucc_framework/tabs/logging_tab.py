@@ -96,9 +96,6 @@ class LoggingTab(Tab):
 
             return LoggingTab(new_definition)
 
-        if "type" in definition:
-            return None
-
         if definition.keys() != {"name", "title", "entity"}:
             return None
 

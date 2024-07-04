@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { CancelToken } from 'axios';
 import { CSRFToken, app } from '@splunk/splunk-utils/config';
 import { createRESTURL } from '@splunk/splunk-utils/url';
 import { generateEndPointUrl, generateToast } from './util';
@@ -16,7 +16,7 @@ interface axiosCallWithEndpointUrl {
 
 interface CommonAxiosCall {
     params?: Record<string, string | number>;
-    signal?: AbortSignal;
+    cancelToken?: CancelToken;
     customHeaders?: Record<string, string>;
     method?: 'get' | 'post' | 'delete';
     body?: URLSearchParams;
@@ -24,7 +24,7 @@ interface CommonAxiosCall {
     callbackOnError?: (error: unknown) => void;
 }
 
-export type AxiosCallType = (axiosCallWithServiceName | axiosCallWithEndpointUrl) & CommonAxiosCall;
+type AxiosCallType = (axiosCallWithServiceName | axiosCallWithEndpointUrl) & CommonAxiosCall;
 
 /**
  *
@@ -44,7 +44,7 @@ const axiosCallWrapper = ({
     endpointUrl,
     params,
     body,
-    signal,
+    cancelToken,
     customHeaders = {},
     method = 'get',
     handleError = false,
@@ -72,10 +72,10 @@ const axiosCallWrapper = ({
         params: newParams,
         method,
         url,
-        withCredentials: true,
+        credentials: 'include',
         headers,
-        signal,
-    } satisfies AxiosRequestConfig;
+        cancelToken,
+    };
 
     if (method === 'post') {
         options.data = body;

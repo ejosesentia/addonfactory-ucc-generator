@@ -163,7 +163,7 @@
   "inputs": {
     "data_ingestion_input": {
       "options": {
-        "defaultValue": "-24h,now",
+        "defaultValue": "-7d,now",
         "token": "data_ingestion_time"
       },
       "title": "Time",

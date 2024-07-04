@@ -22,7 +22,7 @@ import yaml
 
 from splunk_add_on_ucc_framework import utils
 from splunk_add_on_ucc_framework.entity import expand_entity
-from splunk_add_on_ucc_framework.tabs import resolve_tab, LoggingTab
+from splunk_add_on_ucc_framework.tabs import resolve_tab
 
 Loader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 yaml_load = functools.partial(yaml.load, Loader=Loader)
@@ -124,13 +124,6 @@ class GlobalConfig:
         return settings
 
     @property
-    def logging_tab(self) -> Dict[str, Any]:
-        for tab in self.tabs:
-            if LoggingTab.from_definition(tab) is not None:
-                return tab
-        return {}
-
-    @property
     def configs(self) -> List[Any]:
         configs = []
         for tab in self.tabs:
@@ -143,7 +136,7 @@ class GlobalConfig:
         return self._content.get("alerts", [])
 
     @property
-    def meta(self) -> Dict[str, Any]:
+    def meta(self) -> Dict[str, str]:
         return self._content["meta"]
 
     @property

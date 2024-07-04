@@ -42,6 +42,9 @@
       "options": {
         "xAxisVisibility": "hide",
         "xAxisTitleText": "Time",
+        "seriesColors": [
+          "#A870EF"
+        ],
         "yAxisTitleText": "Errors count"
       },
       "title": "Errors count",
@@ -91,7 +94,7 @@
     "errors_tab_errors_list_ds": {
       "type": "ds.search",
       "options": {
-        "query": "{{errors_list}} exc_l IN ($error_types$)",
+        "query": "{{errors_list}}",
         "queryParameters": {
           "earliest": "$errors_tab_time.earliest$",
           "latest": "$errors_tab_time.latest$"
@@ -103,52 +106,17 @@
   "inputs": {
     "errors_tab_input": {
       "options": {
-        "defaultValue": "-24h,now",
+        "defaultValue": "-7d,now",
         "token": "errors_tab_time"
       },
       "title": "Time",
       "type": "input.timerange"
-    },
-    "errors_type_input": {
-      "options": {
-                "items": [
-            {
-                "label": "All",
-                "value": "*"
-            },
-            {
-                "label": "Permission Error",
-                "value": "\"Permission Error\""
-            },
-            {
-                "label": "Authentication Error",
-                "value": "\"Authentication Error\""
-            },
-            {
-                "label": "Connection Error",
-                "value": "\"Connection Error\""
-            },
-            {
-                "label": "Configuration Error",
-                "value": "\"Configuration Error\""
-            },
-            {
-                "label": "Server Error",
-                "value": "\"Server Error\""
-            }
-                ],
-        "token": "error_types",
-        "defaultValue": "*"
-      },
-      "title": "Error types",
-      "type": "input.multiselect"
     }
   },
   "layout": {
     "type": "grid",
     "globalInputs": [
-      "errors_tab_input",
-      "errors_type_input"
+      "errors_tab_input"
     ],
     "structure": [
       {

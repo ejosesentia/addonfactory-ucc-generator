@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 import argparse
-import re
 import sys
 from typing import Optional, Sequence
 import logging
@@ -36,8 +35,6 @@ logger = logging.getLogger("ucc_gen")
 # subparser being specified. Example is `--version`, the default subparser will
 # be added here as well. But this is not a big deal for now, we don't have
 # global options anyway.
-
-
 class DefaultSubcommandArgumentParser(argparse.ArgumentParser):
     __default_subparser = None
 
@@ -81,10 +78,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     build_parser.add_argument(
         "--config",
-        type=config_file_type,
+        type=str,
         nargs="?",
-        help="path to configuration file, defaults to globalConfig file in parent directory of source provided. "
-        "Only .json and .yaml files are accepted.",
+        help="path to configuration file, defaults to globalConfig file in parent directory of source provided",
         default=None,
     )
     build_parser.add_argument(
@@ -233,15 +229,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             addon_name=args.addon_name,
         )
     return 0
-
-
-def config_file_type(filename: str) -> str:
-    pattern = re.compile(r".*\.(json|yaml)$")
-    if not pattern.match(filename):
-        msg = f"Global config file should be a JSON or YAML file. Provided: {filename}"
-        logger.error(msg)
-        raise argparse.ArgumentTypeError(msg)
-    return filename
 
 
 if __name__ == "__main__":
