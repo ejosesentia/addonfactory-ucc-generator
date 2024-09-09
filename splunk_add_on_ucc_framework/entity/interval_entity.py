@@ -30,8 +30,8 @@ class IntervalEntity(Entity):
             "validators": [
                 {
                     "type": "regex",
-                    "errorMsg": "This should be a positive non-zero number or a valid cron expression.",
-                    "pattern": r"^(((\*\/[0-5]?\d|[0-5]?\d|\*|([0-5]?\d,)+[0-5]?\d)(\s(\*\/[01]?\d|1?[0-9]|2[0-3]|\*|(([01]?\d|2[0-3]),)+([01]?\d|2[0-3])))?(\s(\*\/[0-3]?\d|0?[1-9]|[12]\d|3[01]|\*|(([0-3]?\d),)+([0-3]?\d)))?(\s(\*\/[01]?\d|0?[1-9]|1[0-2]|\*|(([01]?\d),)+([01]?\d)))?(\s(\*\/[0-7]|[0-7]|\*|(([0-7]),)+[0-7]))?)|\d+)$",
+                    "errorMsg": f"{self['label']} must be either a non-negative number or -1.",
+                    "pattern": r"^(?:-1|\d+(?:\.\d+)?)$",
                 }
             ],
         }

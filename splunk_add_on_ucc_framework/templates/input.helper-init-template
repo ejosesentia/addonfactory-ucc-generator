@@ -78,10 +78,12 @@ def stream_events(inputs: smi.InputDefinition, event_writer: smi.EventWriter):
                 )
             log.events_ingested(
                 logger,
-                normalized_input_name,
+                input_name,
                 sourcetype,
                 len(data),
+                input_item.get("index"),
+                account=input_item.get("account"),
             )
             log.modular_input_end(logger, normalized_input_name)
         except Exception as e:
-            log.log_exception(logger, e, msg_before="Exception raised while ingesting data for demo_input: ")
+            log.log_exception(logger, e, "my custom error type", msg_before="Exception raised while ingesting data for demo_input: ")

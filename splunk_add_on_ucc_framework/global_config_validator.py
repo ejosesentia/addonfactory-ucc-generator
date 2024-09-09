@@ -21,18 +21,15 @@ from typing import Any, Dict, List
 import logging
 import itertools
 
-
 import jsonschema
 
 from splunk_add_on_ucc_framework import dashboard as dashboard_lib
 from splunk_add_on_ucc_framework import global_config as global_config_lib
+from splunk_add_on_ucc_framework import data_ui_generator
 from splunk_add_on_ucc_framework.tabs import resolve_tab, Tab
+from splunk_add_on_ucc_framework.exceptions import GlobalConfigValidatorException
 
 logger = logging.getLogger("ucc_gen")
-
-
-class GlobalConfigValidatorException(Exception):
-    pass
 
 
 class GlobalConfigValidator:
@@ -43,6 +40,7 @@ class GlobalConfigValidator:
 
     def __init__(self, source_dir: str, global_config: global_config_lib.GlobalConfig):
         self._source_dir = source_dir
+        self._global_config = global_config
         self._config = global_config.content
 
     @property
@@ -57,7 +55,7 @@ class GlobalConfigValidator:
         Raises jsonschema.ValidationError if config is not valid.
         """
         schema_path = os.path.join(self._source_dir, "schema", "schema.json")
-        with open(schema_path) as f_schema:
+        with open(schema_path, encoding="utf-8") as f_schema:
             schema_raw = f_schema.read()
             schema = json.loads(schema_raw)
         try:
@@ -483,33 +481,6 @@ class GlobalConfigValidator:
                         f"Supported panel names: {dashboard_lib.SUPPORTED_PANEL_NAMES_READABLE}"
                     )
 
-    def _warn_on_placeholder_usage(self) -> None:
-        """
-        Warns if placeholder is used.
-        More details here: https://github.com/splunk/addonfactory-ucc-generator/issues/831.
-        """
-        pages = self._config["pages"]
-        for tab in self.config_tabs:
-            for entity in tab["entity"]:
-                if "placeholder" in entity.get("options", {}):
-                    logger.warning(
-                        f"`placeholder` option found for configuration tab '{tab['name']}' "
-                        f"-> entity field '{entity['field']}'. "
-                        f"Please take a look at https://github.com/splunk/addonfactory-ucc-generator/issues/831."
-                    )
-        inputs = pages.get("inputs")
-        if inputs is None:
-            return
-        services = inputs["services"]
-        for service in services:
-            for entity in service["entity"]:
-                if "placeholder" in entity.get("options", {}):
-                    logger.warning(
-                        f"`placeholder` option found for input service '{service['name']}' "
-                        f"-> entity field '{entity['field']}'. "
-                        f"Please take a look at https://github.com/splunk/addonfactory-ucc-generator/issues/831."
-                    )
-
     def _validate_checkbox_group(self) -> None:
         pages = self._config["pages"]
         inputs = pages.get("inputs")
@@ -613,11 +584,11 @@ class GlobalConfigValidator:
                     visited = self._is_circular(
                         mods, visited, all_entity_fields, influenced_field
                     )
-        # all of dependent modifications fields are dead_end
+        # All dependent modifications fields are dead_end
         visited[current_field] = DEAD_END
         return visited
 
-    def _check_if_cilcular(
+    def _check_if_circular(
         self,
         all_entity_fields: List[Any],
         fields_with_mods: List[Any],
@@ -672,7 +643,7 @@ class GlobalConfigValidator:
 
         return all_fields
 
-    def _get_all_modifiction_data(
+    def _get_all_modification_data(
         self,
         collections: List[Dict[str, Any]],
     ) -> List[Any]:
@@ -692,9 +663,9 @@ class GlobalConfigValidator:
     def _validate_field_modifications(self) -> None:
         """
         Validates:
-        Circular dependencies
-        If fields try modify itself
-        If fields try modify unexisting field
+        * Circular dependencies
+        * If fields try to modify itself
+        * If fields try to modify field that do not exist
         """
         pages = self._config["pages"]
 
@@ -706,9 +677,9 @@ class GlobalConfigValidator:
                 fields_with_mods_config,
                 all_modifications_config,
                 all_fields_config,
-            ) = self._get_all_modifiction_data(tabs)
+            ) = self._get_all_modification_data(tabs)
 
-            self._check_if_cilcular(
+            self._check_if_circular(
                 all_fields_config, fields_with_mods_config, all_modifications_config
             )
 
@@ -720,10 +691,23 @@ class GlobalConfigValidator:
                 fields_with_mods_inputs,
                 all_modifications_inputs,
                 all_fields_inputs,
-            ) = self._get_all_modifiction_data(services)
+            ) = self._get_all_modification_data(services)
 
-            self._check_if_cilcular(
+            self._check_if_circular(
                 all_fields_inputs, fields_with_mods_inputs, all_modifications_inputs
+            )
+
+    def _validate_meta_default_view(self) -> None:
+        default_view = self._global_config.meta.get(
+            "defaultView", data_ui_generator.DEFAULT_VIEW
+        )
+        if default_view == "inputs" and not self._global_config.has_inputs():
+            raise GlobalConfigValidatorException(
+                'meta.defaultView == "inputs" but there is no inputs defined in globalConfig'
+            )
+        if default_view == "dashboard" and not self._global_config.has_dashboard():
+            raise GlobalConfigValidatorException(
+                'meta.defaultView == "dashboard" but there is no dashboard defined in globalConfig'
             )
 
     def validate(self) -> None:
@@ -736,7 +720,7 @@ class GlobalConfigValidator:
         self._validate_duplicates()
         self._validate_alerts()
         self._validate_panels()
-        self._warn_on_placeholder_usage()
         self._validate_checkbox_group()
         self._validate_groups()
         self._validate_field_modifications()
+        self._validate_meta_default_view()

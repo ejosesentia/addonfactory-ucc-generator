@@ -11,8 +11,7 @@
       "type": "splunk.markdown",
       "options": {
         "markdown": "View your add-on ingestion by data volume and number of events.",
-        "customFontSize": 12,
-        "fontColor": "#6c7685"
+        "customFontSize": 12
       }
     },
     "data_ingestion_timerange_label_start_viz": {
@@ -163,7 +162,7 @@
   "inputs": {
     "data_ingestion_input": {
       "options": {
-        "defaultValue": "-7d,now",
+        "defaultValue": "-24h,now",
         "token": "data_ingestion_time"
       },
       "title": "Time",

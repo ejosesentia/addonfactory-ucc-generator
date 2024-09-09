@@ -11,8 +11,7 @@
       "type": "splunk.markdown",
       "options": {
         "markdown": "Use the Monitoring dashboard to track behaviors for your add-on.",
-        "customFontSize": 12,
-        "fontColor": "#6c7685"
+        "customFontSize": 12
       }
     },
     "overview_main_label_viz": {
@@ -71,9 +70,6 @@
       "options": {
         "xAxisVisibility": "hide",
         "xAxisTitleText": "Time",
-        "seriesColors": [
-          "#A870EF"
-        ],
         "yAxisTitleText": "Error count"
       },
       "title": "Errors",
@@ -128,7 +124,7 @@
   "inputs": {
     "overview_input": {
       "options": {
-        "defaultValue": "-7d,now",
+        "defaultValue": "-24h,now",
         "token": "overview_time"
       },
       "title": "Time",
