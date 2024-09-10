@@ -18,6 +18,7 @@ SCRIPT_DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 REPO_ROOT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
 
 cd $REPO_ROOT_DIR/ui
+export NODE_OPTIONS="--max-old-space-size=8192"
 yarn run setup
 cd $REPO_ROOT_DIR
 
