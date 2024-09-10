@@ -14,6 +14,7 @@ import CustomTab from '../../components/CustomTab/CustomTab';
 import ConfigurationFormView from '../../components/ConfigurationFormView';
 import ConfigurationTable from '../../components/ConfigurationTable';
 import SubDescription from '../../components/SubDescription/SubDescription';
+import UccCredit from '../../components/UCCCredit/UCCCredit';
 import { TabSchema } from '../../types/globalConfig/pages';
 
 const StyledHeaderControls = styled.div`
@@ -131,7 +132,6 @@ function ConfigurationPage() {
                             <ColumnLayout.Column span={3} style={{ textAlignLast: 'right' }}>
                                 <StyledHeaderControls>
                                     <UccCredit />
-                                    <OpenApiDownloadButton />
                                 </StyledHeaderControls>
                             </ColumnLayout.Column>
                         </Row>
