@@ -17,7 +17,11 @@
             }
           },
           "table": {
-            "actions": ["edit", "delete", "clone"],
+            "actions": [
+              "edit",
+              "delete",
+              "clone"
+            ],
             "header": [
               {
                 "label": "Name",
@@ -180,7 +184,10 @@
               "field": "oauth",
               "label": "Not used",
               "options": {
-                "auth_type": ["basic", "oauth"],
+                "auth_type": [
+                  "basic",
+                  "oauth"
+                ],
                 "basic": [
                   {
                     "oauth_field": "username",
@@ -514,7 +521,10 @@
               "validators": [
                 {
                   "type": "number",
-                  "range": [1, 65535],
+                  "range": [
+                    1,
+                    65535
+                  ],
                   "isInteger": true
                 }
               ],
@@ -581,7 +591,10 @@
               "validators": [
                 {
                   "type": "number",
-                  "range": [1, 10]
+                  "range": [
+                    1,
+                    10
+                  ]
                 }
               ]
             },
@@ -685,7 +698,13 @@
       "title": "Inputs",
       "description": "Manage your data inputs",
       "table": {
-        "actions": ["edit", "enable", "delete","search", "clone"],
+        "actions": [
+          "edit",
+          "enable",
+          "delete",
+          "search",
+          "clone"
+        ],
         "header": [
           {
             "label": "Name",
@@ -707,6 +726,8 @@
     "version": "5.41.0R9c5fbfe0",
     "displayName": "Splunk UCC test Add-on",
     "schemaVersion": "0.0.3",
-    "_uccVersion": "5.41.0"
+    "_uccVersion": "5.41.0",
+    "hideUCCVersion": false,
+    "hideOpenAPI": true
   }
 }

@@ -239,10 +239,11 @@ const globalConfigMock = {
         name: 'demo_addon_for_splunk',
         restRoot: 'demo_addon_for_splunk',
         version: '5.31.1R85f0e18e',
-        displayName: 'Demo Add-on for Splunk',
+        displayName: 'Demo Add-on for Splunk Hello',
         schemaVersion: '0.0.3',
         checkForUpdates: false,
         searchViewDefault: false,
+        hideUCCVersion: true
     },
 } satisfies z.input<typeof GlobalConfigSchema>;
 

@@ -17,7 +17,11 @@
             }
           },
           "table": {
-            "actions": ["edit", "delete", "clone"],
+            "actions": [
+              "edit",
+              "delete",
+              "clone"
+            ],
             "header": [
               {
                 "label": "Name",
@@ -180,7 +184,10 @@
               "field": "oauth",
               "label": "Not used",
               "options": {
-                "auth_type": ["basic", "oauth"],
+                "auth_type": [
+                  "basic",
+                  "oauth"
+                ],
                 "basic": [
                   {
                     "oauth_field": "username",
@@ -514,7 +521,10 @@
               "validators": [
                 {
                   "type": "number",
-                  "range": [1, 65535]
+                  "range": [
+                    1,
+                    65535
+                  ]
                 }
               ],
               "field": "proxy_port"
@@ -580,7 +590,10 @@
               "validators": [
                 {
                   "type": "number",
-                  "range": [1, 10]
+                  "range": [
+                    1,
+                    10
+                  ]
                 }
               ]
             },
@@ -1125,14 +1138,21 @@
                     "options": {
                       "isExpandable": true
                     },
-                    "fields": ["classic_load_balancers", "application_load_balancers"]
+                    "fields": [
+                      "classic_load_balancers",
+                      "application_load_balancers"
+                    ]
                   },
                   {
                     "label": "VPC",
                     "options": {
                       "isExpandable": true
                     },
-                    "fields": ["vpcs", "vpc_network_acls", "vpc_subnets"]
+                    "fields": [
+                      "vpcs",
+                      "vpc_network_acls",
+                      "vpc_subnets"
+                    ]
                   }
                 ],
                 "rows": [
@@ -1348,7 +1368,13 @@
         ]
       },
       "table": {
-        "actions": ["edit", "enable", "delete","search", "clone"],
+        "actions": [
+          "edit",
+          "enable",
+          "delete",
+          "search",
+          "clone"
+        ],
         "header": [
           {
             "label": "Name",
@@ -1427,14 +1453,24 @@
       "description": "Description for test Alert Action",
       "iconFileName": "test icon.png",
       "adaptiveResponse": {
-        "task": ["Create", "Update"],
+        "task": [
+          "Create",
+          "Update"
+        ],
         "supportsAdhoc": true,
         "supportsCloud": true,
-        "subject": ["endpoint"],
-        "category": ["Information Conveyance", "Information Portrayal"],
+        "subject": [
+          "endpoint"
+        ],
+        "category": [
+          "Information Conveyance",
+          "Information Portrayal"
+        ],
         "technology": [
           {
-            "version": ["1.0.0"],
+            "version": [
+              "1.0.0"
+            ],
             "product": "Test Incident Update",
             "vendor": "Splunk"
           }
@@ -1530,6 +1566,8 @@
     "version": "5.41.0R9c5fbfe0",
     "displayName": "Splunk UCC test Add-on",
     "schemaVersion": "0.0.3",
-    "_uccVersion": "5.41.0"
+    "_uccVersion": "5.41.0",
+    "hideUCCVersion": false,
+    "hideOpenAPI": true
   }
 }
