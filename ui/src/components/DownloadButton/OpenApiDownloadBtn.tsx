@@ -7,7 +7,7 @@ const fileUrl = getBuildDirPath().replace('js/build', 'openapi.json');
 
 function OpenApiDownloadButton() {
     const unifiedConfigs = getUnifiedConfigs();
-    if (unifiedConfigs?.meta?.hideOpenAPI) {
+    if (unifiedConfigs.meta.hideOpenAPI) {
         return null;
     }
     return (

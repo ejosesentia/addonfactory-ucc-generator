@@ -11,7 +11,7 @@ export const meta = z.object({
     hideUCCVersion: z.boolean().default(true).optional(),
     checkForUpdates: z.boolean().default(true).optional(),
     searchViewDefault: z.boolean().default(false).optional(),
-    hideOpenAPI: z.boolean().default(true).optional(),
+    hideOpenAPI: z.boolean().default(false).optional(),
 });
 
 export type meta = z.infer<typeof meta>;
