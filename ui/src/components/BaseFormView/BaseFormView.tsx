@@ -249,7 +249,7 @@ class BaseFormView extends PureComponent<BaseFormProps, BaseFormState> {
                             display: true,
                             value:
                                 this.currentInput?.auth_type === 'oauth' ||
-                                this.currentInput?.auth_type === 'basic'
+                                    this.currentInput?.auth_type === 'basic'
                                     ? this.currentInput?.auth_type
                                     : authType[0],
                         };
@@ -571,11 +571,14 @@ class BaseFormView extends PureComponent<BaseFormProps, BaseFormState> {
 
             // validation for unique name
             if ([MODE_CREATE, MODE_CLONE].includes(this.props.mode)) {
-                const isExistingName = Boolean(
-                    Object.values(this.context?.rowData || {}).find((val) =>
-                        Object.keys(val).find((name) => name === this.datadict.name)
-                    )
-                );
+                const isExistingName = Boolean(Object.entries(this.context?.rowData || {}).find(entry => {
+                    const [key, value] = entry;
+                    const item = Object.keys(value).find(name => name == this.datadict.name);
+                    if (key == this.props.serviceName && item) {
+                        return true;
+                    }
+                    return false;
+                }));
 
                 if (isExistingName && this.entities) {
                     const index = this.entities.findIndex((e) => e.field === 'name');
@@ -648,9 +651,9 @@ class BaseFormView extends PureComponent<BaseFormProps, BaseFormState> {
             let error:
                 | boolean
                 | {
-                      errorField?: string; // TODO add typescript to validation and remove those assertions
-                      errorMsg?: string;
-                  } = validator.doValidation(this.datadict);
+                    errorField?: string; // TODO add typescript to validation and remove those assertions
+                    errorMsg?: string;
+                } = validator.doValidation(this.datadict);
             if (error) {
                 const errorWithCorretType = error as {
                     errorField?: string;
@@ -699,8 +702,7 @@ class BaseFormView extends PureComponent<BaseFormProps, BaseFormState> {
                 }
 
                 let host = encodeURI(
-                    `https://${this.datadict.endpoint || this.datadict.endpoint_authorize}${
-                        this.oauthConf?.authCodeEndpoint
+                    `https://${this.datadict.endpoint || this.datadict.endpoint_authorize}${this.oauthConf?.authCodeEndpoint
                     }${parameters}`
                 );
                 const redirectURI = new URLSearchParams(host).get('redirect_uri');
@@ -1098,9 +1100,8 @@ class BaseFormView extends PureComponent<BaseFormProps, BaseFormState> {
         const code = decodeURIComponent(message.code);
         const data: Record<string, AcceptableFormValueOrNullish> = {
             method: 'POST',
-            url: `https://${this.datadict.endpoint || this.datadict.endpoint_token}${
-                this.oauthConf?.accessTokenEndpoint
-            }`,
+            url: `https://${this.datadict.endpoint || this.datadict.endpoint_token}${this.oauthConf?.accessTokenEndpoint
+                }`,
             grant_type: 'authorization_code',
             client_id: this.datadict.client_id,
             client_secret: this.datadict.client_secret,
