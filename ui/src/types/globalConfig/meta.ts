@@ -9,6 +9,7 @@ export const meta = z.object({
     schemaVersion: z.string().optional(),
     _uccVersion: z.string().optional(),
     hideUCCVersion: z.boolean().optional(),
+    hideOpenAPI: z.boolean().optional(),
     checkForUpdates: z.boolean().default(true).optional(),
     searchViewDefault: z.boolean().default(false).optional(),
     isVisible: z.boolean().default(true).optional(),
