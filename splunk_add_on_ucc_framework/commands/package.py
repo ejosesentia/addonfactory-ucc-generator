@@ -59,5 +59,23 @@ def package(path_to_built_addon: str, output_directory: Optional[str] = None) ->
     )
     with tarfile.open(archive_path, mode="w:gz", encoding="utf-8") as archive_file:
         logger.info(path_to_built_addon)
-        archive_file.add(path_to_built_addon, arcname=addon_name)
+        # archive_file.add(path_to_built_addon, arcname=addon_name)
+        add_files_to_archive(archive_file, path_to_built_addon)
+
     logger.info(f"Package exported to {archive_path}")
+
+
+def add_files_to_archive(archive_file, path_to_built_addon):
+    output_path: str = os.path.dirname(path_to_built_addon) + "/"
+    for root, dirs, files in os.walk(path_to_built_addon):
+        arc_dir = root.replace(output_path, "")
+        if arc_dir.endswith("local") or arc_dir.endswith("__pycache__"):
+            logger.info(f"Ignore directory: {arc_dir}")
+            continue
+        for file in files:
+            arc_name: str = os.path.join(arc_dir, file)
+            file_name: str = os.path.join(root, file)
+            if file in ["local.meta"]:
+                logger.info(f"Ignore file: {arc_name}")
+                continue
+            archive_file.add(file_name, arcname=arc_name)
